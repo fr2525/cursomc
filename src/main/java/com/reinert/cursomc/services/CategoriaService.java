@@ -1,10 +1,12 @@
 package com.reinert.cursomc.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.reinert.cursomc.domain.Categoria;
 import com.reinert.cursomc.repositories.CategoriaRepository;
+import com.reinert.cursomc.services.exceptions.DataIntegrityException;
 import com.reinert.cursomc.services.exceptions.ObjectNotFoundException;
 
 import java.util.Optional;
@@ -29,5 +31,15 @@ public class CategoriaService {
 		find(obj.getId());
 		return repo.save(obj);
 	}
+	public void delete(Integer id) {
+		find(id);
+		try {
+		   repo.deleteById(id);
+		}
+		catch (DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possível excluir categoria que possue produtos");
+		}
+	}
+
 }
 
