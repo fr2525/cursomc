@@ -2,6 +2,9 @@ package com.reinert.cursomc.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.reinert.cursomc.domain.Categoria;
@@ -11,6 +14,8 @@ import com.reinert.cursomc.services.exceptions.ObjectNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
+
+import javax.naming.ldap.PagedResultsControl;
 
 @Service
 public class CategoriaService {
@@ -45,6 +50,9 @@ public class CategoriaService {
 	public List<Categoria> findAll() {
 		return repo.findAll(); 
 	}
-	
+	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction ) {
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction),orderBy);
+		return repo.findAll(pageRequest);
+	}
 }
 
