@@ -9,6 +9,7 @@ import com.reinert.cursomc.repositories.CategoriaRepository;
 import com.reinert.cursomc.services.exceptions.DataIntegrityException;
 import com.reinert.cursomc.services.exceptions.ObjectNotFoundException;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -41,5 +42,9 @@ public class CategoriaService {
 		}
 	}
 
+	public List<Categoria> findAll() {
+		return repo.findAll(); 
+	}
+	
 }
 
